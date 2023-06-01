@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_after_sales_problem?characterEncoding=utf-8&userSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: l9459...
+  mail:
+    host: smtp.163.com
+    username: after_sale_problem@163.com
+    password: PNZLHZNTYHXORYBO
+  redis:
+    host: 192.168.209.71
+    timeout: 180000
+    password: 123456
+
+server:
+  port: 8081
+
+mybatis-plus:
+  type-aliases-package: "com.server.digitalmanagementsystemforenterpriseaftersalesproblems.entity"

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.digitalmanagementsystemforenterpriseaftersalesproblems.mapper.AfterSalesProblemMapper">
+
+    <select id="selectProblemCategoryByStarttime"
+            parameterType="int" resultType="DayProblemOneCategory">
+        SELECT problem_category,COUNT(*) as num FROM `after_sales_problem`
+        WHERE DATE_FORMAT(problem_starttime,"%Y-%m-%d") = DATE_FORMAT(DATE_SUB(NOW(),INTERVAL #{num} DAY),"%Y-%m-%d")
+        GROUP BY problem_category;
+    </select>
+
+    <select id="selectAllByProblemStatus" resultType="java.lang.Integer">
+        select count(*) from `after_sales_problem`
+        <where>
+            <if test="num != null and num != 0">
+                problem_status = #{num}
+            </if>
+            <if test="isToday">
+                and DATE_FORMAT(problem_starttime,"%Y-%m-%d") = DATE_FORMAT(NOW(),"%Y-%m-%d")
+            </if>
+        </where>
+    </select>
+
+    <select id="selectProblemCategory"
+            resultType="Integer">
+        select count(*) as num from `after_sales_problem` group by problem_category order by problem_category
+    </select>
+
+    <select id="selectProblemStatus"
+            resultType="Integer">
+        select count(*) as num from `after_sales_problem` group by problem_status order by problem_status
+    </select>
+
+    <select id="selectProblemGoods"
+            resultType="DayProblemOneGoods">
+        SELECT goods_name AS name,COUNT(*) AS value FROM `after_sales_problem` AS a,`goods` AS g
+        WHERE a.`goods_id` = g.`goods_id`
+        GROUP BY g.goods_name
+    </select>
+
+    <select id="selectProblemByCondition" resultType="problemData">
+        SELECT problem_id,client_username,goods_name,problem_content,employee_username,problem_category,problem_status,problem_starttime,problem_endtime
+        FROM `after_sales_problem` a,`client` c,`employee` e,`goods` g
+        <where>
+            a.`client_id` = c.`client_id` AND a.`employee_id` = e.`employee_id` AND a.`goods_id` = g.`goods_id`
+            <if test='clientUsername != "" and clientUsername != null'>
+                and client_username = #{clientUsername}
+            </if>
+            <if test='goodsName != "" and goodsName != null'>
+                and goods_name = #{goodsName}
+            </if>
+            <if test='employeeUsername != "" and employeeUsername != null'>
+                and employee_username = #{employeeUsername}
+            </if>
+            <if test="problemStarttime != null">
+                and DATE_FORMAT(problem_starttime,"%Y-%m-%d") = #{problemStarttime}
+            </if>
+            <if test="problemEndtime != null">
+                and DATE_FORMAT(problem_endtime,"%Y-%m-%d") = #{problemEndtime}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryProblemCount"
+            resultType="long">
+        SELECT count(0) FROM `after_sales_problem` a,`client` c,`employee` e,`goods` g
+        <where>
+                a.`client_id` = c.`client_id` and a.`employee_id` = e.`employee_id` and a.`goods_id` = g.`goods_id`
+            <if test='clientUsername != "" and clientUsername != null'>
+                and client_username = #{clientUsername}
+            </if>
+            <if test='goodsName != "" and goodsName != null'>
+                and goods_name = #{goodsName}
+            </if>
+            <if test='employeeUsername != "" and employeeUsername != null'>
+                and employee_username = #{employeeUsername}
+            </if>
+            <if test='problemCategory != null and problemCategory != ""'>
+                and problem_category = #{problemCategory}
+            </if>
+            <if test='problemStatus != null and problemStatus != ""'>
+                and problem_status = #{problemStatus}
+            </if>
+            <if test="problemStarttime != null">
+                and DATE_FORMAT(problem_starttime,"%Y-%m-%d") = #{problemStarttime}
+            </if>
+            <if test="problemEndtime != null">
+                and DATE_FORMAT(problem_endtime,"%Y-%m-%d") = #{problemEndtime}
+            </if>
+        </where>
+    </select>
+</mapper>
