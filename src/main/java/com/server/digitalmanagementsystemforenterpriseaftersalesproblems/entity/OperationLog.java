@@ -1,13 +1,11 @@
 package com.server.digitalmanagementsystemforenterpriseaftersalesproblems.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class OperationLog implements Serializable {
 
     private Long id;
-
-    private Long userId;
 
     private String userName;
 
@@ -15,11 +13,11 @@ public class OperationLog implements Serializable {
 
     private String module;
 
-    private String content;
+    private String operationContent;
 
-    private String ip;
+    private String clientIp;
 
-    private Date createTime;
+    private LocalDate operationTime;
 
     public Long getId() {
         return id;
@@ -27,14 +25,6 @@ public class OperationLog implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUserName() {
@@ -61,27 +51,27 @@ public class OperationLog implements Serializable {
         this.module = module;
     }
 
-    public String getContent() {
-        return content;
+    public String getOperationContent() {
+        return operationContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setOperationContent(String operationContent) {
+        this.operationContent = operationContent;
     }
 
-    public String getIp() {
-        return ip;
+    public String getClientIp() {
+        return clientIp;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setClientIp(String clientIP) {
+        this.clientIp = clientIP;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public LocalDate getOperationTime() {
+        return operationTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setOperationTime(LocalDate operationTime) {
+        this.operationTime = operationTime;
     }
 }

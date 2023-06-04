@@ -25,7 +25,7 @@ public class SpringMVCConfig implements WebMvcConfigurer {
         // 需拦截的路径
         interceptorRegistration.addPathPatterns("/**");
         // 需放行的路径
-        interceptorRegistration.excludePathPatterns("/**/login", "/**/checkUsername/**","/**/email","/employee/**");
+        interceptorRegistration.excludePathPatterns("/**/login", "/**/checkUsername/**","/**/email/**","/employee/**");
 
     }
 }

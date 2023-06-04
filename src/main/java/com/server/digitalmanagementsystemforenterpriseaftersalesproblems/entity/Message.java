@@ -1,6 +1,5 @@
 package com.server.digitalmanagementsystemforenterpriseaftersalesproblems.entity;
 
-import com.google.gson.annotations.Expose;
 
 public class Message {
     private boolean isSuccess;

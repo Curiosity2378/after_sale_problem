@@ -25,18 +25,12 @@ public class LogAspect {
 
     @AfterReturning(pointcut = "logPointCut()")
     public void doAfter(JoinPoint joinPoint){
-        /**
-         * 解析Log注解
-         */
-        SessionUserVO sessionUserVO = getLoginUser();
-
+        //解析Log注解
         String methodName = joinPoint.getSignature().getName();
         Method method = currentMethod(joinPoint,methodName);
         Log log = method.getAnnotation(Log.class);
         String module = log.module();
         String description = log.description();
-
-        logService.put(joinPoint,methodName,module,description,sessionUserVO.getUserName(),sessionUserVO.getId());
     }
 
     /**

@@ -3,6 +3,8 @@ package com.server.digitalmanagementsystemforenterpriseaftersalesproblems.servic
 import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.entity.OperationLog;
 import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.service.LogService;
 import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.service.OperationLogService;
+import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.utils.IPUtil;
+import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.*;
 import org.apache.ibatis.javassist.bytecode.CodeAttribute;
@@ -28,7 +30,7 @@ public class LogServiceImpl implements LogService {
     private OperationLogService operationLogService;
 
     public String initUsername(String username) {
-        if(!StringUtils.isEmpty(username)){
+        if(!username.isEmpty()){
             this.username = username;
         }
         return this.username;
@@ -44,13 +46,12 @@ public class LogServiceImpl implements LogService {
             }
 
             String ip = IPUtil.getIpAddress(request);
-            log.setUserId(userId);
             log.setUserName(userName);
             log.setModule(module);
-            log.setCreateTime(new Date());
+//            log.setCreateTime(new Date());
             log.setDescription(description);
-            log.setIp(ip);
-            log.setContent(operateContent(joinPoint, methodName, ip, request));
+//            log.setIp(ip);
+//            log.setContent(operateContent(joinPoint, methodName, ip, request));
             operationLogService.insert(log);
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +83,7 @@ public class LogServiceImpl implements LogService {
             while (it.hasNext()){
                 Map.Entry entry = (Map.Entry) it.next();
                 String key = (String) entry.getKey();
-                String value = JSONObject.toJSONString(entry.getValue());
+                String value = JsonUtil.toJson(entry.getValue());
                 bf.append(key).append("=");
                 bf.append(value).append("&");
             }

@@ -2,10 +2,8 @@ package com.server.digitalmanagementsystemforenterpriseaftersalesproblems.entity
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.enums.Category;
 import com.server.digitalmanagementsystemforenterpriseaftersalesproblems.enums.Status;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
